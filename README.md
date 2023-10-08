@@ -1,11 +1,6 @@
-# SUM.js
-
- 
-     
+# SUM.js    
 <img src="/Sum/sumjs.png" width="50">
-<br>
 <h1 >Hello There!</h1>
-
 <p noselect marquee bold center font="Rubik">WHAT IS SUM JS?</p>
 <br>
 
