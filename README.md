@@ -1,8 +1,6 @@
 # SUM.js    
 <img src="/Sum/sumjs.png" width="50">
-<h1 >Hello There!</h1>
-<p noselect marquee bold center font="Rubik">WHAT IS SUM JS?</p>
-<br>
+<h1>WHAT IS SUM JS?</h1>
 
 <div>Has anyone ever told you that it sucks to assign id's & classes, run over to the stylesheet to style them, then go set up more functions in JavaScript?</div>
 
