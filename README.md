@@ -2,7 +2,7 @@
 
  
      
-     <img color="black" src="/Sum/sumjs.png" width="50">
+<img src="/Sum/sumjs.png" width="50">
 <br>
 <h1 >Hello There!</h1>
 
@@ -19,10 +19,10 @@
  <p><size font="Rubik" typetext bold>Sounds Interesting?</size></p>
 
 <h1 onclick="location.href='https://sumjs.vercel.app/';">Documentation</h1>
-<script src="/Sum/sum.js?v=729293"></script>
+https://sumjs.vercel.app/
 
 <h1>Installation</h1>
-<script src="https://sumjs.vercel.app/Sum/sum.js?v=729293"></script>
+https://sumjs.vercel.app/Sum/sum.js
 
   </body>  
   </html>
