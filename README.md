@@ -1,36 +1,10 @@
 # SUM.js
-<?php $load = "yes"; ?>
- <!DOCTYPE html>
- <html lang="en">
- <head no-cache>
-     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-     <meta charset="UTF-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>SUM js Code</title> 
-                    
-     </head> 
-  <body>   
-    <style> 
-    body {
-        font-family: 'Poppins';
-backgroun: black;
-colo: white;
-overflow-x: hidden;
-    }
-    img[src*="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png"]{ display: none; }
-    p {
-        font-size: 17px;
-    }
 
-    
-    </style> 
+ 
      <div style="align-items: center;" height="50" flex width="100 min" margin="-8">
      <img color="black" src="/Sum/sumjs.png" width="50"><in uppercase typetext style="font-size: 25px; margin-left: -5px; font-family: 'Rubik'; font-weight: 650;">Sum.js</in></div>
 <br>
-<img padding="10" theme="slide-fill" src="https://scriptlux.000webhostapp.com/images/20230830_154300.jp" fallback="https://scriptlux.000webhostapp.com/images/20230830_154300.jpg" width="100" page-middle-h round> 
+<img padding="10" theme="slide-
 <div><h1 page-middle-h font="Cursive"><size up="10">Hello There!</size></h1>
 
 <p noselect marquee bold center font="Rubik">WHAT IS SUM JS?</p>
