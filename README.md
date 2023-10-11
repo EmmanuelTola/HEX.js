@@ -1,5 +1,5 @@
 # HEX.js    
-<img src="/Sum/sumjs.png" width="50">
+<img src="/Sum/files/sumjs.png" width="50">
 <h1>WHAT IS SUM JS?</h1>
 
 <div>Has anyone ever told you that it sucks to assign id's & classes, run over to the stylesheet to style them, then go set up more functions in JavaScript?</div>
