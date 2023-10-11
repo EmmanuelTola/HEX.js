@@ -1,6 +1,6 @@
 # HEX.js    
 <img src="/Sum/files/sumjs.png" width="50">
-<h1>WHAT IS SUM JS?</h1>
+<h1>WHAT IS HEX JS?</h1>
 
 <div>Has anyone ever told you that it sucks to assign id's & classes, run over to the stylesheet to style them, then go set up more functions in JavaScript?</div>
 
@@ -11,7 +11,7 @@
  <p><size font="Rubik" typetext bold>Sounds Interesting?</size></p>
 
 <h1 onclick="location.href='https://hexjs.vercel.app/';">Documentation</h1>
-https://sumjs.vercel.app/
+https://hexjs.vercel.app/
 
 <h1>Installation</h1>
 https://hexjs.vercel.app/Sum/hex.js
