@@ -2,9 +2,9 @@ const sumhead = document.getElementsByTagName('HEAD')[0];
 const sumcss = document.createElement('link');
 sumcss.rel = 'stylesheet';
 sumcss.type = 'text/css';
-sumcss.href = 'https://hexjs.vercel.app/Sum/hex.css';
+sumcss.href = '/Sum/hex.css';
 const calcjs = document.createElement('script');
-calcjs.src = 'https://hexjs.vercel.app/Sum/calc.hex.js';
+calcjs.src = '/Sum/calc.hex.js';
 const popcss = document.createElement('link');
 popcss.rel = 'stylesheet';
 popcss.type = 'text/css';
@@ -70,7 +70,15 @@ xhr.send("sess=hex8080");
 document.addEventListener("DOMContentLoaded", function() {
     
 rootHex();
-});  
+});
+
+
+function newPlayer() {
+const pscript = document.createElement("script"); 
+pscript.src = "/Sum/player.hex.js";
+document.body.appendChild(pscript); 
+newAud();
+}
 
 function makeid(length) {
     let result = '';
@@ -164,9 +172,12 @@ const sbolds = hasAttr(bolda, 'bold');if(sbolds == true){boldv = bolda.getAttrib
 const scol = document.getElementsByTagName('*');for(var i = 0; i < scol.length;i++) {const cola = scol[i];
 const scols = hasAttr(cola, 'color');if(scols == true){colv = cola.getAttribute("color"); 
     cola.style.color = colv;}}
+
 const srat = document.getElementsByTagName('*');for(var i = 0; i < srat.length;i++) {const rata = srat[i];
 const srats = hasAttr(rata, 'ratio');if(srats == true){ratv = rata.getAttribute("ratio"); 
     rata.style.setProperty("aspect-ratio", ratv);}}
+
+
 const sblend = document.getElementsByTagName('*');for(var i = 0; i < sblend.length;i++) {const blenda = sblend[i];
 const sblends = hasAttr(blenda, 'blend');if(sblends == true){blendv = blenda.getAttribute("blend"); 
     blenda.style.setProperty("mix-blend-mode", blendv);}}
@@ -455,5 +466,15 @@ plusnav.innerText = '-';
 }
 }
 
-
+function hexGetLyrics(lyrich, innerh){
+const locateh = lyrich;
+const lelement = innerh;
+fetch(locateh)
+  .then(function(response) {
+    response.text().then(function(text) {
+      data = text;
+document.getElementById(innerh).innerText = data;   });
+  });
+    
+}
 
