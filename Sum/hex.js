@@ -164,6 +164,9 @@ const sbolds = hasAttr(bolda, 'bold');if(sbolds == true){boldv = bolda.getAttrib
 const scol = document.getElementsByTagName('*');for(var i = 0; i < scol.length;i++) {const cola = scol[i];
 const scols = hasAttr(cola, 'color');if(scols == true){colv = cola.getAttribute("color"); 
     cola.style.color = colv;}}
+const srat = document.getElementsByTagName('*');for(var i = 0; i < srat.length;i++) {const rata = srat[i];
+const srats = hasAttr(rata, 'ratio');if(srats == true){ratv = rata.getAttribute("ratio"); 
+    rata.style.setProperty("aspect-ratio", ratv);}}
 const sblend = document.getElementsByTagName('*');for(var i = 0; i < sblend.length;i++) {const blenda = sblend[i];
 const sblends = hasAttr(blenda, 'blend');if(sblends == true){blendv = blenda.getAttribute("blend"); 
     blenda.style.setProperty("mix-blend-mode", blendv);}}
