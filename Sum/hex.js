@@ -2,9 +2,9 @@ const sumhead = document.getElementsByTagName('HEAD')[0];
 const sumcss = document.createElement('link');
 sumcss.rel = 'stylesheet';
 sumcss.type = 'text/css';
-sumcss.href = 'https://hexjs.vercel.app/Sum/hex.css';
+sumcss.href = '/Sum/hex.css';
 const calcjs = document.createElement('script');
-calcjs.src = 'https://hexjs.vercel.app/Sum/calc.hex.js';
+calcjs.src = '/Sum/calc.hex.js';
 const popcss = document.createElement('link');
 popcss.rel = 'stylesheet';
 popcss.type = 'text/css';
@@ -98,6 +98,38 @@ function makeid(length) {
 const hasAttr = (el, attr) => el.getAttribute(attr) != null;
 
 function rootHex() {
+const hexnav = document.querySelectorAll('nav');
+for(var i = 0; i < hexnav.length;i++) {
+const thenav = hexnav[i];
+const navtype = thenav.getAttribute("type");
+const navicon = thenav.getAttribute("logo");
+const navname = thenav.getAttribute("name");
+if(navtype == "header") {
+const naval = thenav.innerHTML;
+thenav.innerHTML = '';
+const navhead = document.createElement("div");
+navhead.id = "navhead";
+navhead.classList.add("navhead");
+thenav.appendChild(navhead);
+const navlogo = document.createElement("div");
+navlogo.classList.add("navlogo");
+navlogo.innerHTML = '<img src="'+navicon+'" width="40"><p typetext>'+navname+'</p><img src="https://hexjs.vercel.app/Sum/files/navlist.png" width="40" class="opennav" onclick="togNav();">';
+navhead.appendChild(navlogo);
+const headernav = document.createElement("div");
+headernav.id = "header-nav";
+thenav.appendChild(headernav);
+const closenav = document.createElement("div");
+closenav.classList.add("navlogo");
+closenav.innerHTML = '<img src="'+navicon+'" width="40"><p typetext>'+navname+'</p><p class="closenav" onclick="togNav();">&times;</p>';
+headernav.appendChild(closenav);
+const innernav = document.createElement("div");
+innernav.classList.add("navinner");
+innernav.innerHTML = naval;
+headernav.appendChild(innernav);
+}
+}
+
+    
 const divs = document.querySelectorAll('size'); for(var i = 0; i < divs.length;i++){const esize = divs[i];const upsize = esize.getAttribute("up");const downsize = esize.getAttribute("down");const parent = divs[i].parentElement;const parentsize = window.getComputedStyle(parent, null).getPropertyValue('font-size');const pfontSize = parseFloat(parentsize);const oldsize = parseInt(pfontSize);const upex = hasAttr(esize, 'up');if(upex == true){if(upsize > 0) {const addsize = parseInt(upsize);const newsize = oldsize + addsize;esize.style.fontSize = newsize+'px';}else{esize.style.fontSize = (pfontSize + 5) + 'px';
     }}     
 const downex = hasAttr(esize, 'down');if(downex == true) { 
@@ -364,39 +396,6 @@ thedrop.appendChild(sdrop);
 
 
 }
-
-
-
-const hexnav = document.querySelectorAll('nav'); for(var i = 0; i < hexnav.length;i++) {
-const thenav = hexnav[i];
-const navtype = thenav.getAttribute("type");
-const navicon = thenav.getAttribute("logo");
-const navname = thenav.getAttribute("name");
-if(navtype == "header") {
-const naval = thenav.innerHTML;
-thenav.innerHTML = '';
-const navhead = document.createElement("div");
-navhead.id = "navhead";
-navhead.classList.add("navhead");
-thenav.appendChild(navhead);
-const navlogo = document.createElement("div");
-navlogo.classList.add("navlogo");
-navlogo.innerHTML = '<img src="'+navicon+'" width="40"><p typetext>'+navname+'</p><img src="https://hexjs.vercel.app/Sum/files/navlist.png" width="40" class="opennav" onclick="togNav();">';
-navhead.appendChild(navlogo);
-const headernav = document.createElement("div");
-headernav.id = "header-nav";
-thenav.appendChild(headernav);
-const closenav = document.createElement("div");
-closenav.classList.add("navlogo");
-closenav.innerHTML = '<img src="'+navicon+'" width="40"><p typetext>'+navname+'</p><p class="closenav" onclick="togNav();">&times;</p>';
-headernav.appendChild(closenav);
-const innernav = document.createElement("div");
-innernav.classList.add("navinner");
-innernav.innerHTML = naval;
-headernav.appendChild(innernav);
-  
-    
-}
 }
 
 
@@ -405,8 +404,7 @@ headernav.appendChild(innernav);
     
     
     
-    
-}function hexIfText(sumifh, typeh, wordh) {const sum = sumifh;const stype = typeh;const stext = wordh;var element = document.querySelector(`[s-if="${sum}"]`);var ogtext = element.innerText;if(ogtext == stext){if(stype == "hide"){element.style.display='none';}if(stype == "show"){
+ function hexIfText(sumifh, typeh, wordh) {const sum = sumifh;const stype = typeh;const stext = wordh;var element = document.querySelector(`[s-if="${sum}"]`);var ogtext = element.innerText;if(ogtext == stext){if(stype == "hide"){element.style.display='none';}if(stype == "show"){
      element.style.display='block';}}}
 function hexIfNum(sumifh, typeh, wordh) {const sum = sumifh; const stype = typeh;const ostext = wordh; const stext = parseInt(ostext);var element = document.querySelector(`[s-if="${sum}"]`);var rogtext = element.innerText;var ogtext = parseInt(rogtext);
 if(stype == "more"){
