@@ -2,9 +2,9 @@ const sumhead = document.getElementsByTagName('HEAD')[0];
 const sumcss = document.createElement('link');
 sumcss.rel = 'stylesheet';
 sumcss.type = 'text/css';
-sumcss.href = 'https://hexjs.vercel.app/Sum/hex.css';
+sumcss.href = '/Sum/hex.css';
 const calcjs = document.createElement('script');
-calcjs.src = 'https://hexjs.vercel.app/Sum/calc.hex.js';
+calcjs.src = '/Sum/calc.hex.js';
 const popcss = document.createElement('link');
 popcss.rel = 'stylesheet';
 popcss.type = 'text/css';
@@ -75,7 +75,7 @@ rootHex();
 
 function newPlayer() {
 const pscript = document.createElement("script"); 
-pscript.src = "https://hexjs.vercel.app/Sum/player.hex.js";
+pscript.src = "/Sum/player.hex.js";
 document.body.appendChild(pscript); 
 newAud();
 }
@@ -150,6 +150,9 @@ const sels = document.getElementsByTagName('*'); for(var i = 0; i < sels.length;
 const sflex = document.getElementsByTagName('*'); for(var i = 0; i < sflex.length;i++) {const flexso = sflex[i];const flexs = hasAttr(flexso, 'flex');if(flexs == true){flexso.style.display = 'flex';}}
 const sflexw = document.getElementsByTagName('*'); for(var i = 0; i < sflexw.length;i++) {const flexwso = sflexw[i];const flexws = hasAttr(flexwso, 'flex-wrap');if(flexws == true){flexwso.style.display = 'flex';flexwso.style.flexWrap = 'wrap';}}
 const maqs = document.getElementsByTagName('*'); for(var i = 0; i < maqs.length;i++) {const maqso = maqs[i];const rmaqs = hasAttr(maqso, 'marquee');if(rmaqs == true){maqso.classList.add("marquee");}}
+
+const nosc = document.getElementsByTagName('*'); for(var i = 0; i < nosc.length;i++) {const thenosc = nosc[i];const hasnosc = hasAttr(thenosc, 'noscroll');if(hasnosc == true){thenosc.classList.add("noscroll");}}  
+
 const stheme = document.getElementsByTagName('*'); for(var i = 0; i < stheme.length;i++) {const sthemecurr = stheme[i];const hastheme = hasAttr(sthemecurr, 'theme');if(hastheme == true){sthemepick = sthemecurr.getAttribute("theme"); const themestr = sthemepick.split(' ');sthemecurr.setAttribute("class", themestr[0] + " " + themestr[1] + " " + themestr[2] + " " + themestr[3]);}}
 const spush = document.getElementsByTagName('*'); for(var i = 0; i < spush.length;i++) {const pusha = spush[i];
 const pushs = hasAttr(pusha, 'push');if(pushs == true){pushv = pusha.getAttribute("push"); 
@@ -172,7 +175,24 @@ const sbolds = hasAttr(bolda, 'bold');if(sbolds == true){boldv = bolda.getAttrib
 const scol = document.getElementsByTagName('*');for(var i = 0; i < scol.length;i++) {const cola = scol[i];
 const scols = hasAttr(cola, 'color');if(scols == true){colv = cola.getAttribute("color"); 
     cola.style.color = colv;}}
+  
+const behex = document.getElementsByTagName('*');for(var i = 0; i < behex.length;i++) {const behind = behex[i];
+const hasbehind = hasAttr(behind, 'back');if(hasbehind == true){behexv = behind.getAttribute("back"); 
+    behind.style.background = behexv;}}
+    
+      
+  
+    
+const zdex = document.getElementsByTagName('*');for(var i = 0; i < zdex.length;i++) {const dexin = zdex[i];
+const hasdex= hasAttr(dexin, 'index');if(hasdex == true){dexv = dexin.getAttribute("index"); 
+    dexin.style.zIndex = dexv;}}
 
+const disp = document.getElementsByTagName('*');for(var i = 0; i < disp.length;i++) {const currdis = disp[i];
+const hasdisp = hasAttr(currdis, 'display');if(hasdisp == true){dispv = currdis.getAttribute("display"); 
+    currdis.style.display = dispv;}}
+    
+
+    
 const srat = document.getElementsByTagName('*');for(var i = 0; i < srat.length;i++) {const rata = srat[i];
 const srats = hasAttr(rata, 'ratio');if(srats == true){ratv = rata.getAttribute("ratio"); 
     rata.style.setProperty("aspect-ratio", ratv);}}
