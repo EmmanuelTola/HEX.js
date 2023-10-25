@@ -295,9 +295,10 @@ var filecon = filecon.replace(regexed, '');
 var filecon = filecon.replace(/src="\//g, 'src="https://pixelcorp.000webhostapp.com/');
 var filecon = filecon.replace(/href="\//g, 'href="https://pixelcorp.000webhostapp.com/');
 
-
+if(filetype == "html") {
 var hexjs = '<script src="/Sum/hex.js?v=1.0"><\/script>';
-var filecon = filecon + hexjs;
+} else { var hexjs = ""; }
+	var filecon = filecon + hexjs;
 var result = document.getElementById('result');
 document.getElementById('play').style.display = 'block'
 result.srcdoc = filecon;
@@ -345,8 +346,10 @@ var filecon = filecon + usecon;
 const regexed = /<play play="([^"]+)">/g;
 
 var filecon = filecon.replace(regexed, '');
+	if(filetype == "html") {
 var hexjs = '<script src="/Sum/hex.js?v=1.0"><\/script>';
-var filecon = filecon + hexjs;
+	} else { var hexjs = ""; }
+		var filecon = filecon + hexjs;
 
 
 var filecon = filecon.replace(/src="\//g, 'src="https://pixelcorp.000webhostapp.com/');
