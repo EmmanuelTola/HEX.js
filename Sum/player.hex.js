@@ -447,7 +447,10 @@ function anyRange(min, max) {
 
 
 function shareTrack(shareh, nameh, sourceh, canvash, artisth) {
-var hextshare = shareh; 
+if(shareh == null) { var hextshare = window.location; } else {
+if(shareh == "") {var hextshare = window.location;} else {
+var hextshare = shareh;
+}}
 var hextname = nameh; 
 var hextsource = sourceh; 
 var hextartist = artisth;
