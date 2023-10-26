@@ -52,11 +52,11 @@ tracknav.setAttribute("onclick", "togTrack()");
 const trackrep = document.createElement("div");
 trackrep.classList.add("trackrep");
 if(ifalbum == "album") {
-var arrowback = `<img src="https://hexjs.vercel.app/Sum/files/arrow-left.png" style="margin-right: 10px" onclick="document.getElementById('hex-player').style.display='none'">`;  
+var arrowback = `<img src="https://hexjs.vercel.app/Sum/files/arrow-left.png" style="margin-right: 5px" onclick="document.getElementById('hex-player').style.display='none'">`;  
 } else {
 var arrowback = "";
 }
-trackrep.innerHTML = arrowback + '<img src="https://hexjs.vercel.app/Sum/files/wrepeat.png" id="trackrep" onclick="togTrackRep()">';
+trackrep.innerHTML = arrowback + '<img style="margin-left: 5px;" src="https://hexjs.vercel.app/Sum/files/wrepeat.png" id="trackrep" onclick="togTrackRep()"><img style="margin-left: 10px;" src="https://hexjs.vercel.app/Sum/files/wmute.png" id="mutehex" onclick="toghexMute()">';
 const alltracks = document.createElement("div");
 alltracks.classList.add("alltracks"); 
 playherex.appendChild(trackrep);
@@ -293,13 +293,15 @@ for (var i = 0; i < lyrtr.length; i++) {
 const hextex = "tracktext"+i;
 const hextext = document.getElementById(hextex);
 hextext.style.position = 'absolute'; 
-hextext.style.top = '0';
+hextext.style.bottom = '0';
+hextext.style.right = '0';
+hextext.style.float = 'right';
 hextext.style.height = '100%';
 hextext.style.width = 'calc(100vw - 460px)';
 hextext.zIndex = '4';
-hextext.style.marginLeft = '460px';
-document.getElementById('trackslit').style.marginBottom = '75px';
-document.getElementById('playslit').style.marginBottom = '10px';
+hextext.style.marginLeft = '460px !important';
+document.getElementById('trackslit').style.marginBottom = '80px';
+document.getElementById('playslit').style.marginBottom = '20px';
 }
 
 
@@ -400,10 +402,8 @@ function togTrack() {
 const thelist = document.getElementById('tracklist');
 if(thelist.style.height == 'auto') {
  thelist.style.height = '0'; 
- thelist.style.minHeight = '0';
 } else {
  thelist.style.height = 'auto';
- thelist.style.minHeight = '30%';
 }
 }
 
@@ -423,6 +423,22 @@ if(thelis.style.filter == 'invert(0.4) sepia(1) hue-rotate(20deg) saturate(1000%
 }
 
 }
+
+function toghexMute() {
+var mutehex = document.getElementById('mutehex'); 
+if(mutehex.src == "https://hexjs.vercel.app/Sum/files/wnomute.png") {
+mutehex.src = "https://hexjs.vercel.app/Sum/files/wmute.png"; 
+document.getElementById('taudio').muted = false;
+    
+} else {
+    
+mutehex.src = "https://hexjs.vercel.app/Sum/files/wnomute.png"; 
+document.getElementById('taudio').muted = true;
+
+    
+}}
+
+
 
 function anyRange(min, max) {
    var ranrange = Math.random() * (max - min) + min;
@@ -481,7 +497,10 @@ url: hexsharer
 } 
 }
 
-
+const hexhead = document.createElement("meta");
+hexhead.name = "theme-color";
+hexhead.content = "#3e3c4a"; 
+document.getElementsByTagName('head')[0].appendChild(hexhead);
 
 
 

@@ -315,6 +315,19 @@ font-size: 36px;
     -webkit-background-clip: text;
     color: rgba(0, 0, 0, 0.1);
 }
+
+  .noscroll {
+  -ms-overflow-style: none;  
+  width: 0px !important /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+  
+  .noscroll::-webkit-scrollbar {
+  display: none;
+  width: 0px !important
+}
+
+
 .navhead {
 position: fixed; 
 height: 40px;
@@ -399,11 +412,13 @@ background: black;
 position: relative;
 height: 100%;
 color: white;
+overflow-x: hidden ;
 overflow-x: hidden;
 }
 
 .playherex {
-width: 100%;
+width: 100%; 
+overflow-x: hidden;
 z-index: 9;
 background: linear-gradient(to bottom, #3e3c4a, #5e4e51, #573C41, #523338);
 padding-bottom: 30px;
@@ -466,8 +481,8 @@ aspect-ratio: 1/1;
 width: 100%;
 max-width: 450px;
 display: none;
-overflow-x: hidden;
-position: relative;
+overflow-x: ;
+position: relativ;
 padding: 30px 0 30px 0;
 height: auto; 
 }
@@ -583,15 +598,16 @@ margin-right: 30px;
 }
 
 #tracksend {
-float: right; 
+text-align: right; 
 z-index: 3;
-position: absolute;
-right: 0;
-margin: -20px 10% 0 0;
+margin: -25px 0 0 0;
+max-width: 450px;
+width: 98%;
 }
 
 #tracksend img{
 width: 20px;
+margin-right: 20px;
 z-index: 3;
 }
 
