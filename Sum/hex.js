@@ -1,10 +1,282 @@
+function rootHexSize(target='', display) {
+
+if(display == null) {
+var result = document.createElement("in");
+result.id = "hexsize";
+document.body.appendChild(result); } else {
+var result = document.querySelector(display);
+}
+function hexSpecTarget(resources) {
+const targetDom = document.querySelector(resources); 
+let targetTotSize;
+const targetImg = targetDom.querySelectorAll('img,video,audio,iframe,embed');
+var textLen = targetDom.innerHTML
+var textSize = unescape(encodeURIComponent(textLen)).length;
+var textIntS = Number(textSize);
+
+var totalSizeInMB = (textIntS / 1024).toFixed(2);
+
+var oldSizeMB = result.innerText;
+var passOldSize = Number(oldSizeMB); 
+
+result.innerText = Number(totalSizeInMB) + passOldSize; 
+
+
+for (var x = 0; x < targetImg.length; x++) {
+const targetSrc = targetImg[x].src;
+const tarGate = checkFileSize(targetSrc, function(tarFileSize){ enterSize(tarFileSize);});
+}
+
+}
+
+function enterSize(resources) {
+thesize = resources;
+showTotSize(thesize);
+}
+function calculateSize(resources){
+let totalSize = 0; resources.forEach((resource) => {
+          totalSize += resource.encodedBodySize;
+        });
+totalSize = parseInt(totalSize);
+var totalSizeInMB = (totalSize / 1024).toFixed(2);
+result.innerText = totalSizeInMB;
+}
+
+function checkFileSize(resources, callback) {
+let tarFileSize; 
+var xhr = new XMLHttpRequest();
+xhr.open('HEAD', resources, true);
+xhr.onreadystatechange = function(){
+  if ( xhr.readyState == 4 ) {
+    if ( xhr.status == 200 ) {
+tarFileSize =  xhr.getResponseHeader('Content-Length');
+callback(tarFileSize);
+    } else {
+      alert('Hex Error: Trouble Getting DOM size');
+    }
+  }
+};
+xhr.send(null);
+
+
+}
+if (performance && performance.getEntriesByType) {
+const resources = performance.getEntriesByType('resource');
+let totalSize;
+if (target) {
+
+ const targetElement = document.querySelector(target);
+ if (targetElement) {
+totalSize = hexSpecTarget(target);
+} else {
+
+result.innerHTML = 'Target element not found.';
+return;
+}
+} else {
+calculateSize(resources);
+        }
+function showTotSize(resources){
+var thesource = resources;
+if(thesource == null) {
+var thesource = "0";
+}
+var totalSizeInMB = (thesource / 1024).toFixed(2);
+
+var oldSizeMB = result.innerText;
+var passOldSize = Number(oldSizeMB); 
+
+result.innerText = Number(totalSizeInMB) + passOldSize; 
+
+}
+
+} else {
+console.error('Hex Error: Unsupported Browser - Cannot Track Page Size');
+}}
+
+
+function rootHexApp(initialData){
+return function (targetSelector){
+const targetElement = document.querySelector(targetSelector);
+if (targetElement) {
+const template = targetElement.innerHTML;
+// Function to render the template with data
+function render(data) {
+const renderedContent = template.replace(/\{\{ (.*?) \}\}/g, (match, variable) => {
+const key = variable.trim();
+return data[key] || '';
+});
+return renderedContent;}
+// Update the content
+targetElement.innerHTML = render(initialData);
+        } else {
+console.log("Hex Error: Target element not found!"); 
+}};
+}
+
+function rootHexForm(validationRules) {
+function validateForm(formSelector) {
+const formElement = document.querySelector(formSelector);
+if (formElement) {
+const errorhex = document.createElement("div");
+errorhex.style.color = "red";
+errorhex.id = "errorhex";
+formElement.appendChild(errorhex);
+formElement.addEventListener('submit', (event) => {
+let valid = true;
+const errorMessages = [];
+for (const fieldName in validationRules) {
+const fieldElement = formElement.querySelector(`[name="${fieldName}"]`);
+if (fieldElement) {
+const value = fieldElement.value;
+const rules = validationRules[fieldName];
+if (rules.required && value.trim() === '') {
+valid = false;
+errorMessages.push(`The ${fieldName} field is required.`);
+}
+if (rules.minLength && value.length < rules.minLength) {
+valid = false;
+ errorMessages.push(`The ${fieldName} field must be at least ${rules.minLength} characters.`);
+}
+
+if (rules.maxLength && value.length > rules.maxLength) {
+  valid = false;
+  errorMessages.push(`The ${fieldName} field cannot exceed ${rules.maxLength} characters.`);
+}
+
+if (rules.minValue && parseFloat(value) < rules.minValue) {
+  valid = false;
+  errorMessages.push(`The ${fieldName} field must be greater than or equal to ${rules.minValue}.`);
+}
+
+if (rules.maxValue && parseFloat(value) > rules.maxValue) {
+  valid = false;
+  errorMessages.push(`The ${fieldName} field must be less than or equal to ${rules.maxValue}.`);
+}
+
+if (rules.isNumber && isNaN(value)) {
+  valid = false;
+  errorMessages.push(`The ${fieldName} field must be a number.`);
+}
+
+if (rules.containsUppercase && !/[A-Z]/.test(value)) {
+  valid = false;
+  errorMessages.push(`The ${fieldName} field must contain at least one uppercase letter.`);
+}
+
+if (rules.containsDigit && !/\d/.test(value)) {
+  valid = false;
+  errorMessages.push(`The ${fieldName} field must contain at least one digit.`);
+}
+
+if (rules.regex && !new RegExp(rules.regex).test(value)) {
+valid = false;
+errorMessages.push(`The ${fieldName} field does not match the required pattern.`);
+}
+
+
+// You can add more validation rules here
+
+if (!valid) { 
+event.preventDefault();
+document.getElementById('errorhex').innerHTML = errorMessages.join('<br>'); 
+}}}});
+} else {
+console.log("Hex Error: Form element not found!");
+}}
+return validateForm;
+
+}
+
+// rootHexState function
+function rootHexState(options) {
+const state = {};
+const eventBus = {};
+const stateTarget = document.querySelector(options.target);
+const stateKey = options.state;
+function setState(value) {
+state[stateKey] = value;
+if (eventBus[stateKey]) {
+eventBus[stateKey].forEach((callback) => callback(value));
+}}
+function getState() {
+return state[stateKey];
+}
+function subscribeToState(callback) {
+if (!eventBus[stateKey]) {
+eventBus[stateKey] = [];
+}
+eventBus[stateKey].push(callback);}
+return function () {
+var stateUse = "";
+if(options.use == null) {
+var stateUse = "innerText"; 
+} else {
+var stateUse = options.use;
+}
+const stateEffect = stateUse;
+
+subscribeToState((newValue) => {
+stateTarget[stateEffect] = newValue;
+});
+var newStateVal = "";
+if(options.content == "prompt") {
+var newStateVal = prompt("Enter a new username:");
+} else {
+var newStateVal = options.content;
+}
+setState(newStateVal);
+};}
+
+
+function newHexForm(initialFields) {
+const fields = initialFields || [];
+function generateForm(target) {
+const formElement = document.querySelector(target);
+if (!formElement || fields.length === 0) {return;}
+const form = document.createElement("form");
+fields.forEach((field) => {
+const hfitype = Object.keys(field)[0]; 
+const hexformInput = document.createElement(hfitype); 
+if(hfitype == "select" || hfitype == "datalist") {
+hfioptions = field.options.split(",");
+for(var x = 0; x < hfioptions.length; x++) {
+const hexformSelectOpt = document.createElement("option");
+hexformSelectOpt.value = hfioptions[x];
+if(hfitype == "select") {
+hexformSelectOpt.innerText = hfioptions[x]; }
+hexformInput.appendChild(hexformSelectOpt);
+}
+}
+
+
+for (const hexformInputAttr in field) {
+        if (field.hasOwnProperty(hexformInputAttr)) {
+if(!field[hexformInputAttr]) {
+ } else {
+
+var hexformInputAttrVal = field[hexformInputAttr];          hexformInput.setAttribute(hexformInputAttr, hexformInputAttrVal);
+       }   
+        }
+      }
+
+
+form.appendChild(hexformInput);
+});
+formElement.appendChild(form);
+}
+return generateForm;
+
+}
+
+
 const sumhead = document.getElementsByTagName('HEAD')[0];
 const sumcss = document.createElement('link');
 sumcss.rel = 'stylesheet';
 sumcss.type = 'text/css';
-sumcss.href = 'https://hexjs.vercel.app/Sum/hex.css';
+sumcss.href = 'https://pixelcorp.000webhostapp.com/Sum/hex.css';
 const calcjs = document.createElement('script');
-calcjs.src = 'https://hexjs.vercel.app/Sum/calc.hex.js';
+calcjs.src = 'https://pixelcorp.000webhostapp.com/Sum/calc.hex.js';
 const popcss = document.createElement('link');
 popcss.rel = 'stylesheet';
 popcss.type = 'text/css';

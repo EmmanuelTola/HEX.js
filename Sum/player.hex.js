@@ -1,4 +1,9 @@
 const playhex = document.getElementsByTagName('player')[0];
+const parentHexOr = playhex.parentElement; 
+parentHexOr.style.position = "relative";
+const parentHex = document.createElement("player");
+parentHex.id = "parent-hex"; 
+parentHexOr.appendChild(parentHex);
 function newAud() {
 if(playhex) {
 const ifalbum = playhex.getAttribute("page");
@@ -186,7 +191,7 @@ if(ifalbum == "album") {
 document.getElementById('hex-player').style.display = 'none';
 albumpage.classList.add("albumpage");
 albumpage.id = "albumpage";
-document.body.appendChild(albumpage);
+parentHex.appendChild(albumpage);
 const trackimg = document.createElement("img");
 trackimg.classList.add("alcanvas");
 trackimg.src = playhex.getAttribute("canvas");
