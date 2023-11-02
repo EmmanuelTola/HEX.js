@@ -57,7 +57,7 @@ tracknav.setAttribute("onclick", "togTrack()");
 const trackrep = document.createElement("div");
 trackrep.classList.add("trackrep");
 if(ifalbum == "album") {
-var arrowback = `<img src="https://hexjs.vercel.app/Sum/files/arrow-left.png" style="margin-right: 5px" onclick="document.getElementById('hex-player').style.display='none'">`;  
+var arrowback = `<img src="https://hexjs.vercel.app/Sum/files/arrow-left.png" style="margin-right: 5px" onclick="document.getElementById('hex-player').style.visibility='hidden'">`;  
 } else {
 var arrowback = "";
 }
@@ -175,7 +175,7 @@ abtrack.appendChild(eachtrack);
 const abname = document.createElement("div");
 abname.classList.add("abname");
 abname.id = "abname"; 
-abname.setAttribute("onclick", "hexPlayer('"+i+"'); document.getElementById('hex-player').style.display='block'");
+abname.setAttribute("onclick", "hexPlayer('"+i+"'); document.getElementById('hex-player').style.visibility='visible'");
 abname.style.display='block';
 abname.innerHTML = '<p id="abtitle">'+trackname+'</p><p id="abartist">'+trackartist+'</p>';
 const absend = document.createElement("div");
@@ -188,7 +188,7 @@ eachtrack.appendChild(abname);
 
 }
 if(ifalbum == "album") {
-document.getElementById('hex-player').style.display = 'none';
+document.getElementById('hex-player').style.visibility = 'hidden';
 albumpage.classList.add("albumpage");
 albumpage.id = "albumpage";
 parentHex.appendChild(albumpage);
@@ -210,6 +210,7 @@ albumpage.appendChild(trackart);
 albumpage.appendChild(abtrack);
 
 }
+
 
 
 const currtrace = document.createElement('p');
@@ -318,8 +319,7 @@ document.getElementById('playslit').style.marginBottom = '20px';
 
 }
 
-
-
+ 
 }function hexPlayer(currenth) {
 var inicurr = currenth;
 document.getElementById('thecurr').innerText = inicurr;

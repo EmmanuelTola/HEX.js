@@ -348,19 +348,20 @@ overflow: hidden;
 background: white;
 z-index: 9;
 font-size: 17px;
-transition: ease 0.5s;
+transition: ease 0.2s;
 box-shadow: 0 4px 2px -2px gray;
 height: 0px;
 position: fixed; 
 top: 0;
-width: 100vw;
+right: 0;
+width: 0;
 }
 
 .opennav {
 position: absolute; 
 right: 0;
 top: 0;
-margin: 3px 5px 10px 2px;
+margin: 3px 15px 10px 2px;
 font-size: 25px; 
 cursor: pointer;
     

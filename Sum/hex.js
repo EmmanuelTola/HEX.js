@@ -20,6 +20,7 @@ var oldSizeMB = result.innerText;
 var passOldSize = Number(oldSizeMB); 
 
 result.innerText = Number(totalSizeInMB) + passOldSize; 
+result.value = Number(totalSizeInMB) + passOldSize; 
 
 
 for (var x = 0; x < targetImg.length; x++) {
@@ -40,6 +41,8 @@ let totalSize = 0; resources.forEach((resource) => {
 totalSize = parseInt(totalSize);
 var totalSizeInMB = (totalSize / 1024).toFixed(2);
 result.innerText = totalSizeInMB;
+result.value = totalSizeInMB;
+
 }
 
 function checkFileSize(resources, callback) {
@@ -71,6 +74,7 @@ totalSize = hexSpecTarget(target);
 } else {
 
 result.innerHTML = 'Target element not found.';
+result.value = 'Target element not found.';
 return;
 }
 } else {
@@ -87,6 +91,7 @@ var oldSizeMB = result.innerText;
 var passOldSize = Number(oldSizeMB); 
 
 result.innerText = Number(totalSizeInMB) + passOldSize; 
+result.value = Number(totalSizeInMB) + passOldSize; 
 
 }
 
@@ -94,6 +99,23 @@ result.innerText = Number(totalSizeInMB) + passOldSize;
 console.error('Hex Error: Unsupported Browser - Cannot Track Page Size');
 }}
 
+// http get method 
+
+function $GET(urlh, linkh) {
+var url = "";
+var thelink = linkh;
+if(thelink == null) {
+var url = window.location;   
+} else {
+var url = thelink; 
+}
+var urlParams = new URLSearchParams(new URL(url).search);
+var hexget = urlParams.get(urlh);
+return hexget; 
+}
+
+
+// data binding 
 
 function rootHexApp(initialData){
 return function (targetSelector){
@@ -113,6 +135,8 @@ targetElement.innerHTML = render(initialData);
 console.log("Hex Error: Target element not found!"); 
 }};
 }
+
+// form validation
 
 function rootHexForm(validationRules) {
 function validateForm(formSelector) {
@@ -187,6 +211,26 @@ console.log("Hex Error: Form element not found!");
 return validateForm;
 
 }
+
+// hexTable - create tables
+
+ function hexTable(targetSelector, config) {
+config.forEach(paramObj => {
+const tr = document.createElement("tr");
+for (const key in paramObj) {
+ if (paramObj.hasOwnProperty(key)) {
+const value = paramObj[key];
+tr.innerHTML += "<td>"+value+"</td>";
+     
+ }}
+
+        
+const targetTr = document.querySelector(targetSelector);
+targetTr.appendChild(tr); 
+        
+    });
+}
+
 
 // rootHexState function
 function rootHexState(options) {
@@ -296,54 +340,39 @@ sumhead.appendChild(rubcss);
 sumhead.appendChild(chacss);  
 
 
-
-const hexuse = document.getElementsByTagName('use');
-for(var i = 0; i < hexuse.length; i++) {
+   
+const hexuse = document.getElementsByTagName('use'); 
+if(hexuse.length > 0) {
+for(var i = 0; i < hexuse.length; i++) { 
 const theuse = hexuse[i];
-const usesrc = theuse.getAttribute("src");
+const usesrc = theuse.getAttribute("src"); 
 if(usesrc.includes("js")) {
-const uscript = document.createElement("script"); 
-uscript.src = usesrc;
-uscript.type = "text/javascript";
-sumhead.appendChild(uscript);
-} else {
-if(usesrc.includes("css")) {   
-const ustyle = document.createElement("link");
-ustyle.rel = "stylesheet"; 
-ustyle.type = "text/css";
-ustyle.href = usesrc; 
-sumhead.appendChild(ustyle);
-
-} else {     
-let xhr = new XMLHttpRequest();
-    xhr.open("POST", usesrc, true);
-    xhr.onload = ()=>{
-      if(xhr.readyState === XMLHttpRequest.DONE){
-          if(xhr.status === 200){
-            let data = xhr.response; 
-        if(data == "") {} else {
-document.body.innerHTML = data; 
-document.getElementById('body').style.display='block';
-rootHex();           
-        } 
-              
-}}};
-xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-xhr.send("sess=hex8080"); 
-    
-}}
+const uscript = document.createElement("script"); uscript.src = usesrc; uscript.type = "text/javascript"; sumhead.appendChild(uscript); } 
+else { 
+if(usesrc.includes("css")) {
+const ustyle = document.createElement("link"); ustyle.rel = "stylesheet"; ustyle.type = "text/css"; ustyle.href = usesrc; sumhead.appendChild(ustyle); } else {
+let xhr = new XMLHttpRequest(); xhr.open("POST", usesrc, true); xhr.onload = ()=>{ if(xhr.readyState === XMLHttpRequest.DONE){ if(xhr.status === 200){ let data = xhr.response; if(data == "") { } else { 
+var newidd = makeid(5);
+function sendIt(){
+var newuse = document.createElement("div");
+newuse.id = newidd;
+newuse.innerHTML = data;
+theuse.parentNode.replaceChild(newuse, theuse);
 }
+sendIt();
+rootHex('yes');
+typeText('#'+newidd);
+}}}}; 
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); xhr.send("sess=hex8080");}} 
     
+}
+} 
+
+
+document.addEventListener("DOMContentLoaded", function() { 
+    rootHex(); });
+
     
-
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    
-rootHex();
-});
-
 
 function newPlayer() {
 const pscript = document.createElement("script"); 
@@ -366,41 +395,156 @@ function makeid(length) {
 
 
 
-
 const hasAttr = (el, attr) => el.getAttribute(attr) != null;
 
-function rootHex() {
+
+function typeText(elementh) {
+var typeele = document.querySelector(elementh);
+
+const stype = typeele.getElementsByTagName('*'); for(var i = 0; i < stype.length;i++) {const typea = stype[i];
+const types = hasAttr(typea, 'typetext');if(types == true){
+typev = typea.getAttribute("typetext"); 
+const typestr = typev.split(' ');
+var sTin = parseInt(typestr[0]);
+if(typestr[0] > 0){ } else {var sTin = parseInt("100");} 
+const words = typea.innerHTML;
+let charIndex = 0;
+setInterval(function(){
+var sdText = typea;
+var formertext = sdText.innerHTML;
+sdText.innerText = "";
+var currentWord = words;
+var currentChar = currentWord.substring(0, charIndex);
+sdText.innerHTML = currentChar;
+if(sdText.innerHTML == formertext) {sdText.classList.remove("is-blinking");  
+} else {
+if(typestr[1] == "") {
+ sdText.classList.add("is-blinking");   
+} else {
+if(typestr[1] == "noblink") { } else {
+  sdText.classList.add("is-blinking");      
+    }}}
+charIndex++;
+}, sTin);
+}}
+
+    
+}
+
+
+
+
+
+
+
+function rootHex(typehh) {
+var hastype = typehh;
+    
 const hexnav = document.querySelectorAll('nav');
 for(var i = 0; i < hexnav.length;i++) {
-const thenav = hexnav[i];
-const navtype = thenav.getAttribute("type");
-const navicon = thenav.getAttribute("logo");
-const navname = thenav.getAttribute("name");
+var thenavv = hexnav[i];
+const navtype = thenavv.getAttribute("type");
+const navicon = thenavv.getAttribute("logo");
+const navname = thenavv.getAttribute("name");
+
+var thenav = document.createElement("div");
+document.body.appendChild(thenav);
 if(navtype == "header") {
-const naval = thenav.innerHTML;
-thenav.innerHTML = '';
+const naval = thenavv.innerHTML;
+thenavv.innerHTML = '';
 const navhead = document.createElement("div");
 navhead.id = "navhead";
 navhead.classList.add("navhead");
 thenav.appendChild(navhead);
 const navlogo = document.createElement("div");
 navlogo.classList.add("navlogo");
-navlogo.innerHTML = '<img src="'+navicon+'" width="40"><p typetext>'+navname+'</p><img src="https://hexjs.vercel.app/Sum/files/navlist.png" width="40" class="opennav" onclick="togNav();">';
+navlogo.innerHTML = '<img id="logonav" src="'+navicon+'" width="40"><p typetext>'+navname+'</p><img id="imgnav" src="https://hexjs.vercel.app/Sum/files/navlist.png" width="40" class="opennav" onclick="togNav();">';
 navhead.appendChild(navlogo);
+var logonav = document.getElementById('logonav'); 
+if(logonav !== null) {
+logonav.onerror = function() {
+ logonav.remove(); }
+ }
+var imgnav = document.getElementById('imgnav');
+if(imgnav !== null) {
+var parnav = imgnav.parentElement; 
+imgnav.onerror = function() {
+ imgnav.remove();
+ const newimgnav = document.createElement("p"); 
+ newimgnav.classList.add("opennav");
+ newimgnav.style.marginRight = '20px';
+ newimgnav.setAttribute("onclick", "togNav()")
+ newimgnav.innerHTML = "&hearts;";
+ parnav.appendChild(newimgnav);
+}; }
 const headernav = document.createElement("div");
 headernav.id = "header-nav";
 thenav.appendChild(headernav);
 const closenav = document.createElement("div");
 closenav.classList.add("navlogo");
-closenav.innerHTML = '<img src="'+navicon+'" width="40"><p typetext>'+navname+'</p><p class="closenav" onclick="togNav();">&times;</p>';
+closenav.innerHTML = '<img src="'+navicon+'" width="40"><p typetext>'+navname+'</p><p class="closenav" style="font-weight: 100;"  margin="20px right" onclick="togNav();">&times;</p>';
 headernav.appendChild(closenav);
 const innernav = document.createElement("div");
 innernav.classList.add("navinner");
 innernav.innerHTML = naval;
 headernav.appendChild(innernav);
+thenavv.remove();
 }
 }
 
+const hexdrop = document.querySelectorAll('drop'); for(var i = 0; i < hexdrop.length;i++) {
+const thedropp = hexdrop[i];
+dropid = makeid(9);
+const dropname = thedropp.getAttribute("name");
+const thedrop = document.createElement("div");
+const dropval = thedropp.innerHTML;
+thedropp.innerHTML = '';
+thedropp.parentNode.replaceChild(thedrop, thedropp);
+const drophead = document.createElement("div");
+drophead.innerHTML = '<div style="position: relative; display: flex;"><p style="margin: 0px">'+dropname+'</p><p id="drop'+dropid+'" style="position: absolute; right: 0; margin: 0 10px 0 0;">+</p></div><hr>';
+drophead.setAttribute("onclick", "togDrop('"+dropid+"')");
+thedrop.appendChild(drophead);
+const sdrop = document.createElement("div");
+sdrop.classList.add("sdrop");
+sdrop.style.height = '0';
+sdrop.id = dropid; 
+sdrop.innerHTML = dropval; 
+thedrop.appendChild(sdrop);
+
+}
+
+if(hastype !== "yes") {
+    
+ 
+const stype = document.getElementsByTagName('*'); for(var i = 0; i < stype.length;i++) {const typea = stype[i];
+const types = hasAttr(typea, 'typetext');if(types == true){
+typev = typea.getAttribute("typetext"); 
+const typestr = typev.split(' ');
+var sTin = parseInt(typestr[0]);
+if(typestr[0] > 0){ } else {var sTin = parseInt("100");} 
+const words = typea.innerHTML;
+let charIndex = 0;
+setInterval(function(){
+var sdText = typea;
+var formertext = sdText.innerHTML;
+sdText.innerText = "";
+var currentWord = words;
+var currentChar = currentWord.substring(0, charIndex);
+sdText.innerHTML = currentChar;
+if(sdText.innerHTML == formertext) {sdText.classList.remove("is-blinking");  
+} else {
+if(typestr[1] == "") {
+ sdText.classList.add("is-blinking");   
+} else {
+if(typestr[1] == "noblink") { } else {
+  sdText.classList.add("is-blinking");      
+    }}}
+charIndex++;
+}, sTin);
+}}
+
+}
+ 
     
 const divs = document.querySelectorAll('size'); for(var i = 0; i < divs.length;i++){const esize = divs[i];const upsize = esize.getAttribute("up");const downsize = esize.getAttribute("down");const parent = divs[i].parentElement;const parentsize = window.getComputedStyle(parent, null).getPropertyValue('font-size');const pfontSize = parseFloat(parentsize);const oldsize = parseInt(pfontSize);const upex = hasAttr(esize, 'up');if(upex == true){if(upsize > 0) {const addsize = parseInt(upsize);const newsize = oldsize + addsize;esize.style.fontSize = newsize+'px';}else{esize.style.fontSize = (pfontSize + 5) + 'px';
     }}     
@@ -484,8 +628,22 @@ const behex = document.getElementsByTagName('*');for(var i = 0; i < behex.length
 const hasbehind = hasAttr(behind, 'back');if(hasbehind == true){behexv = behind.getAttribute("back"); 
     behind.style.background = behexv;}}
     
+  const bohex = document.getElementsByTagName('*');for(var i = 0; i < bohex.length;i++) {const bordhex = bohex[i];
+const hasbordhex = hasAttr(bordhex, 'border');if(hasbordhex == true){bohexv = bordhex.getAttribute("border"); 
+    bordhex.style.border = bohexv;}}
+    
+
+const showhex = document.getElementsByTagName('*');for(var i = 0; i < showhex.length;i++) {const hexshow = showhex[i];
+const hasshow = hasAttr(hexshow, 'show');if(hasshow == true){showhexv = hexshow.getAttribute("show"); 
+var showele = document.querySelector(showhexv); 
+hexshow.addEventListener("click", function() { showele.style.display='block'; })}}
+    
+              
+const beflow = document.getElementsByTagName('*');for(var i = 0; i < beflow.length;i++) {const flowhex = beflow[i];
+const hasbeflow = hasAttr(flowhex, 'flow');if(hasbeflow == true){beflowv = flowhex.getAttribute("flow"); 
+    flowhex.style.overflow = beflowv;}}
+    
       
-  
     
 const zdex = document.getElementsByTagName('*');for(var i = 0; i < zdex.length;i++) {const dexin = zdex[i];
 const hasdex= hasAttr(dexin, 'index');if(hasdex == true){dexv = dexin.getAttribute("index"); 
@@ -621,60 +779,15 @@ const pagevm = document.getElementsByTagName('*'); for(var i = 0; i < pagevm.len
       pagevmo.style.setProperty('transform', 'translate(0, -50%');
   }}
 const sran = document.getElementsByTagName('*'); for(var i = 0; i < sran.length;i++) {const srano = sran[i]; const srp = srano.parentElement; const scon = srano.cloneNode(true);  const srans = hasAttr(srano, 's-range');if(srans == true){const sranv = srano.getAttribute("s-range");   }}
-const stype = document.getElementsByTagName('*'); for(var i = 0; i < stype.length;i++) {const typea = stype[i];
-const types = hasAttr(typea, 'typetext');if(types == true){
-typev = typea.getAttribute("typetext"); 
-const typestr = typev.split(' ');
-var sTin = parseInt(typestr[0]);
-if(typestr[0] > 0){ } else {var sTin = parseInt("100");} 
-const words = typea.innerHTML;
-let charIndex = 0;
-setInterval(function(){
-var sdText = typea;
-var formertext = sdText.innerHTML;
-sdText.innerText = "";
-var currentWord = words;
-var currentChar = currentWord.substring(0, charIndex);
-sdText.innerHTML = currentChar;
-if(sdText.innerHTML == formertext) {sdText.classList.remove("is-blinking");      
-} else {
-if(typestr[1] == "") {
- sdText.classList.add("is-blinking");   
-} else {
-if(typestr[1] == "noblink") { } else {
-  sdText.classList.add("is-blinking");      
-    }}}
-charIndex++;
-}, sTin);
-}}
-
-
-const hexdrop = document.querySelectorAll('drop'); for(var i = 0; i < hexdrop.length;i++) {
-const thedrop = hexdrop[i];
-dropid = makeid(9);
-const dropname = thedrop.getAttribute("name");
-const dropval = thedrop.innerHTML;
-thedrop.innerHTML = '';
-const drophead = document.createElement("div");
-drophead.innerHTML = '<div style="position: relative; display: flex;"><p style="margin: 0px">'+dropname+'</p><p id="drop'+dropid+'" style="position: absolute; right: 0; margin: 0 10px 0 0;">+</p></div><hr>';
-drophead.setAttribute("onclick", "togDrop('"+dropid+"')");
-thedrop.appendChild(drophead);
-const sdrop = document.createElement("div");
-sdrop.classList.add("sdrop");
-sdrop.style.height = '0';
-sdrop.id = dropid; 
-sdrop.innerHTML = dropval; 
-thedrop.appendChild(sdrop);
 
 
 }
-}
 
 
     
 
-    
-    
+
+
     
  function hexIfText(sumifh, typeh, wordh) {const sum = sumifh;const stype = typeh;const stext = wordh;var element = document.querySelector(`[s-if="${sum}"]`);var ogtext = element.innerText;if(ogtext == stext){if(stype == "hide"){element.style.display='none';}if(stype == "show"){
      element.style.display='block';}}}
@@ -736,10 +849,12 @@ if(thepop.style.display == 'block') {
  
 function togNav() {
 const upnav = document.getElementById('header-nav'); 
-if(upnav.style.height == '50vh'){
-upnav.style.height = '0';   
+if(upnav.style.height == '100vh'){
+upnav.style.height = '0'; 
+upnav.style.width = '0'; 
 } else {
-upnav.style.height = '50vh';
+upnav.style.height = '100vh';
+upnav.style.width = '100vw';
 }
 }
 
