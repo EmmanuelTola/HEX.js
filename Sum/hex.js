@@ -489,6 +489,7 @@ imgnav.onerror = function() {
 }; }
 const headernav = document.createElement("div");
 headernav.id = "header-nav";
+headernav.style.setProperty("user-select", "none");
 thenav.appendChild(headernav);
 const closenav = document.createElement("div");
 closenav.classList.add("navlogo");
