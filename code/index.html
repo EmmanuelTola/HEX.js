@@ -88,7 +88,7 @@ z-index: 1;
 </div>
 <div id="write" width="100vw" margin="100px top" style=" height: calc(100vh-105px)">
 <div noscroll height="100%" style="overflow: scroll;" id="numline" absolute push="left" width="40px" back-gradient="to bottom, #e6e5e3, #e6e5e3"></div>    
-<div contenteditable style="outline: none; border: none;" spellcheck="false" padding="10px" id="filecon" file="ini" class="filecon" left width="calc(100%-40px)" margin="40px left">
+<div contenteditable style="outline: none; border: none;" spellcheck="false" padding="10px" id="filecon" file="ini" placeholder="// Boost with Hexxe.js" class="filecon" left width="calc(100%-40px)" margin="40px left">
     
 </div>    
  
@@ -124,7 +124,7 @@ z-index: 1;
  
 </div>
 
-  <script src="https://hexjs.vercel.app/Sum/hex.js"></script>
+  <script src="/Sum/hex.js"></script>
 <script> 
 
 function addFile(thefileh) {
@@ -154,10 +154,7 @@ if(storeit !== null) {
 } 
 }
 document.getElementById('newfile').value = ""; 
-
-
 }
-
 for (var key in localStorage) {
   if (key.includes("dataFile-")) {
 var thefile =  localStorage.getItem(key);
@@ -206,12 +203,12 @@ code.innerText = filecon;
 
 
 window.onload = function() {
-var hashex = localStorage.getItem('dataStore-hex.html'); 
+var hashex = localStorage.getItem('dataStore-he.html'); 
 if(hashex !== null) {
 openFile('hex.html');   
 } else {
-document.getElementById('filecon').setAttribute("file", "hex.html");
-}    
+openFile('hex.html');
+}
 };
 
 
@@ -296,9 +293,9 @@ var filecon = filecon.replace(/src="\//g, 'src="https://pixelcorp.000webhostapp.
 var filecon = filecon.replace(/href="\//g, 'href="https://pixelcorp.000webhostapp.com/');
 
 if(filetype == "html") {
-var hexjs = '<script src="/Sum/hex.js?v=1.0"><\/script>';
+var hexjs = '<script src="/Sum/hex.js"><\/script>';
 } else { var hexjs = ""; }
-	var filecon = filecon + hexjs;
+var filecon = filecon + hexjs;
 var result = document.getElementById('result');
 document.getElementById('play').style.display = 'block'
 result.srcdoc = filecon;
@@ -346,10 +343,10 @@ var filecon = filecon + usecon;
 const regexed = /<play play="([^"]+)">/g;
 
 var filecon = filecon.replace(regexed, '');
-	if(filetype == "html") {
+if(filetype == "html") {
 var hexjs = '<script src="/Sum/hex.js?v=1.0"><\/script>';
-	} else { var hexjs = ""; }
-		var filecon = filecon + hexjs;
+} else { var hexjs = ""; }
+var filecon = filecon + hexjs;
 
 
 var filecon = filecon.replace(/src="\//g, 'src="https://pixelcorp.000webhostapp.com/');
