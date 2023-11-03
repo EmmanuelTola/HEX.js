@@ -278,7 +278,7 @@ const fields = initialFields || [];
 function generateForm(target) {
 const formElement = document.querySelector(target);
 if (!formElement || fields.length === 0) {return;}
-const form = document.createElement("form");
+const form = document.createElement("div");
 fields.forEach((field) => {
 const hfitype = Object.keys(field)[0]; 
 const hexformInput = document.createElement(hfitype); 
@@ -307,7 +307,7 @@ var hexformInputAttrVal = field[hexformInputAttr];          hexformInput.setAttr
 
 form.appendChild(hexformInput);
 });
-formElement.appendChild(form);
+formElement.appendChild(form)
 }
 return generateForm;
 
@@ -448,8 +448,18 @@ const navicon = thenavv.getAttribute("logo");
 const navname = thenavv.getAttribute("name");
 
 var thenav = document.createElement("div");
-document.body.appendChild(thenav);
+document.body.appendChild(thenav); 
+if(navtype == "footer") {
+const naval = thenavv.innerHTML;
+thenav.innerHTML = naval;
+thenav.id = "footer-nav";
+thenav.style.width = '100vw';
+thenavv.innerHTML = '';
+thenavv.remove();
+}
 if(navtype == "header") {
+var hasnavh = document.getElementById('header-nav'); 
+if(hasnavh !== null) {} else {
 const naval = thenavv.innerHTML;
 thenavv.innerHTML = '';
 const navhead = document.createElement("div");
@@ -489,7 +499,7 @@ innernav.classList.add("navinner");
 innernav.innerHTML = naval;
 headernav.appendChild(innernav);
 thenavv.remove();
-}
+} }
 }
 
 const hexdrop = document.querySelectorAll('drop'); for(var i = 0; i < hexdrop.length;i++) {
@@ -524,6 +534,7 @@ var sTin = parseInt(typestr[0]);
 if(typestr[0] > 0){ } else {var sTin = parseInt("100");} 
 const words = typea.innerHTML;
 let charIndex = 0;
+typea.removeAttribute("typetext"); 
 setInterval(function(){
 var sdText = typea;
 var formertext = sdText.innerHTML;
@@ -633,12 +644,7 @@ const hasbordhex = hasAttr(bordhex, 'border');if(hasbordhex == true){bohexv = bo
     bordhex.style.border = bohexv;}}
     
 
-const showhex = document.getElementsByTagName('*');for(var i = 0; i < showhex.length;i++) {const hexshow = showhex[i];
-const hasshow = hasAttr(hexshow, 'show');if(hasshow == true){showhexv = hexshow.getAttribute("show"); 
-var showele = document.querySelector(showhexv); 
-hexshow.addEventListener("click", function() { showele.style.display='block'; })}}
-    
-              
+   
 const beflow = document.getElementsByTagName('*');for(var i = 0; i < beflow.length;i++) {const flowhex = beflow[i];
 const hasbeflow = hasAttr(flowhex, 'flow');if(hasbeflow == true){beflowv = flowhex.getAttribute("flow"); 
     flowhex.style.overflow = beflowv;}}
@@ -652,7 +658,11 @@ const hasdex= hasAttr(dexin, 'index');if(hasdex == true){dexv = dexin.getAttribu
 const disp = document.getElementsByTagName('*');for(var i = 0; i < disp.length;i++) {const currdis = disp[i];
 const hasdisp = hasAttr(currdis, 'display');if(hasdisp == true){dispv = currdis.getAttribute("display"); 
     currdis.style.display = dispv;}}
-    
+  
+ 
+const hsize = document.getElementsByTagName('*');for(var i = 0; i < hsize.length;i++) {const sizehe = hsize[i];
+const hashsize = hasAttr(sizehe, 'size');if(hashsize == true){sizehev = sizehe.getAttribute("size"); 
+    sizehe.style.fontSize = sizehev;}} 
 
     
 const srat = document.getElementsByTagName('*');for(var i = 0; i < srat.length;i++) {const rata = srat[i];
@@ -778,10 +788,50 @@ const pagevm = document.getElementsByTagName('*'); for(var i = 0; i < pagevm.len
       pagevmo.style.top = '50%';
       pagevmo.style.setProperty('transform', 'translate(0, -50%');
   }}
-const sran = document.getElementsByTagName('*'); for(var i = 0; i < sran.length;i++) {const srano = sran[i]; const srp = srano.parentElement; const scon = srano.cloneNode(true);  const srans = hasAttr(srano, 's-range');if(srans == true){const sranv = srano.getAttribute("s-range");   }}
-
+const sran = document.getElementsByTagName('*'); for(var i = 0; i < sran.length;i++) {const srano = sran[i]; const srp = srano.parentElement; const scon = srano.cloneNode(true);  const srans = hasAttr(srano, 's-range');if(srans == true){const sranv = srano.getAttribute("s-range");  
+}}
 
 }
+
+
+
+
+// end of rootHex
+
+ const showhex = document.getElementsByTagName('*');for(var i = 0; i < showhex.length;i++) {const hexshow = showhex[i];
+const hasshow = hasAttr(hexshow, 'show');if(hasshow == true){showhexv = hexshow.getAttribute("show"); 
+var showele = document.querySelector(showhexv); 
+hexshow.addEventListener("click", function() { showele.style.display='block'; })}}
+    
+  const toghex = document.getElementsByTagName('*');for(var i = 0; i < toghex.length;i++) {const togshow = toghex[i];
+const hastog = hasAttr(togshow, 'toggle'); if(hastog == true){toghexv = togshow.getAttribute("toggle"); 
+togshow.addEventListener("click", function() { toggle(toghexv); })}}
+    
+    
+ 
+ 
+ 
+ 
+ const hidehex = document.getElementsByTagName('*');for(var i = 0; i < hidehex.length;i++) {const hexhide = hidehex[i];
+const hashide = hasAttr(hexhide, 'hide');if(hashide == true){hidehexv = hexhide.getAttribute("hide"); 
+var hideele = document.querySelector(hidehexv); 
+hexhide.addEventListener("click", function() { hideele.style.display='none'; })}}
+
+
+ const clickhex = document.getElementsByTagName('*');for(var i = 0; i < clickhex.length;i++) {const hexclick = clickhex[i];
+const hasclick = hasAttr(hexclick, 'click');if(hasclick == true){clickhexv = hexclick.getAttribute("click"); 
+const eachclick = clickhexv.split(";");
+hexclick.addEventListener("click", function() { 
+  
+  for (var i = 0; i < eachclick.length; i++) {  
+    
+    eval(eachclick[i]);
+
+  }  
+    
+})}}
+
+
 
 
     
@@ -791,6 +841,150 @@ const sran = document.getElementsByTagName('*'); for(var i = 0; i < sran.length;
     
  function hexIfText(sumifh, typeh, wordh) {const sum = sumifh;const stype = typeh;const stext = wordh;var element = document.querySelector(`[s-if="${sum}"]`);var ogtext = element.innerText;if(ogtext == stext){if(stype == "hide"){element.style.display='none';}if(stype == "show"){
      element.style.display='block';}}}
+     
+     
+     
+
+
+
+function show(elem) {
+let showele;
+var ele = elem;
+
+if (ele !== undefined) {
+ showele = document.querySelector(ele);
+} else {
+ showele = this;    
+}
+
+showele.style.display = 'block';
+
+}
+
+HTMLElement.prototype.show = show;
+HTMLElement.prototype.hide = hide;
+HTMLElement.prototype.load = load;
+HTMLElement.prototype.toggle = toggle;
+
+
+function toggle(elem) {
+let togele;
+var ele = elem;
+
+if (ele !== undefined) {
+ togele = document.querySelector(ele);
+} else {
+ togele = this;    
+}
+
+
+
+
+var stat = togele.getAttribute("toghex");
+
+
+if(stat !== null) {
+if(togele.style.display !== 'none') {
+togele.setAttribute("toghex", "show"); 
+
+} else {
+togele.setAttribute("toghex", "hide"); 
+
+}  
+}
+
+
+
+if(togele.style.display !== 'none') {
+if(stat !== null) {
+if(stat == "show") {
+ togele.style.display='none';
+togele.setAttribute("toghex", "hide");  
+   
+}   
+} else {
+togele.style.display='none';
+togele.setAttribute("toghex", "hide");  
+}
+} else {
+if(stat !== null) {
+if(stat == "hide") {
+togele.style.display = 'block';
+togele.setAttribute("toghex", "show");  }
+} else {
+togele.style.display = 'block';
+togele.setAttribute("toghex", "show"); 
+}
+}
+}
+
+
+
+
+
+
+
+function hide(elem) {
+        
+let showele;
+var ele = elem;
+
+if (ele !== undefined) {
+ showele = document.querySelector(ele);
+} else {
+ showele = this;    
+}
+
+
+showele.style.display='none';
+    
+}
+
+function load(elem) {
+        
+let loadele;
+var ele = elem;
+
+if (ele !== undefined) {
+ loadele = document.querySelector(ele);
+} else {
+ loadele = this;    
+}
+
+
+loadele.innerHTML = loadval; 
+rootHex();
+loadele.style.display = 'block';
+    
+}
+
+
+ 
+function getHTML(elementh) {
+var ele = document.querySelector(elementh);
+var elehtml = ele.innerHTML; 
+return elehtml; 
+}
+    
+const loadhex = document.getElementsByTagName('*');for(var i = 0; i < loadhex.length;i++) {const hexload = loadhex[i];
+const hasload = hasAttr(hexload, 'load');if(hasload == true){loadhexv = hexload.getAttribute("load");
+var loadele = document.querySelector(loadhexv); 
+
+hexload.addEventListener("click", function() {
+var loadval = getHTML(loadhexv);
+loadele.innerHTML = loadval; 
+rootHex();
+loadele.style.display = 'block';
+
+ })}}
+
+     
+
+ 
+ 
+ 
+ 
+     
 function hexIfNum(sumifh, typeh, wordh) {const sum = sumifh; const stype = typeh;const ostext = wordh; const stext = parseInt(ostext);var element = document.querySelector(`[s-if="${sum}"]`);var rogtext = element.innerText;var ogtext = parseInt(rogtext);
 if(stype == "more"){
 if(ogtext > stext){element.style.display='block';}else{element.style.display='none'; }}
