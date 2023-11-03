@@ -1,0 +1,16 @@
+Building a website entails lots of things from the HTML markup, to the CSS styling, to the JavaScript functionalities.
+
+
+With HEX JS, developers can bring their visions to life. HEX provides the right tools for the job regardless of the size, helping freelancers, enterprises, and startups alike.
+
+
+It provides filtered and optimized system performance component with reactive and speedy rendering. This means HEX handles the difficult tasks and does the heavy lifting to simplify your work
+
+
+It is an extensive framework that scales between its server features and useful libraries. It has an interconnected markup in javascript functions and styling that allow flexibility and static generation in building friendly and beautiful web U.I
+
+
+It is designed with versatility in mind, allowing it to work hand in hand with other technologies. It compiles your code and processes it with speed and precision allowing you to be productive and creative
+
+
+By choosing HEX, you are embracing a trusted technology that propels you into boundless innovation.
