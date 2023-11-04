@@ -434,9 +434,6 @@ charIndex++;
 
 
 
-
-
-
 function rootHex(typehh) {
 var hastype = typehh;
     
@@ -799,25 +796,6 @@ const sran = document.getElementsByTagName('*'); for(var i = 0; i < sran.length;
 
 // end of rootHex
 
- const showhex = document.getElementsByTagName('*');for(var i = 0; i < showhex.length;i++) {const hexshow = showhex[i];
-const hasshow = hasAttr(hexshow, 'show');if(hasshow == true){showhexv = hexshow.getAttribute("show"); 
-var showele = document.querySelector(showhexv); 
-hexshow.addEventListener("click", function() { showele.style.display='block'; })}}
-    
-  const toghex = document.getElementsByTagName('*');for(var i = 0; i < toghex.length;i++) {const togshow = toghex[i];
-const hastog = hasAttr(togshow, 'toggle'); if(hastog == true){toghexv = togshow.getAttribute("toggle"); 
-togshow.addEventListener("click", function() { toggle(toghexv); })}}
-    
-    
- 
- 
- 
- 
- const hidehex = document.getElementsByTagName('*');for(var i = 0; i < hidehex.length;i++) {const hexhide = hidehex[i];
-const hashide = hasAttr(hexhide, 'hide');if(hashide == true){hidehexv = hexhide.getAttribute("hide"); 
-var hideele = document.querySelector(hidehexv); 
-hexhide.addEventListener("click", function() { hideele.style.display='none'; })}}
-
 
  const clickhex = document.getElementsByTagName('*');for(var i = 0; i < clickhex.length;i++) {const hexclick = clickhex[i];
 const hasclick = hasAttr(hexclick, 'click');if(hasclick == true){clickhexv = hexclick.getAttribute("click"); 
@@ -834,38 +812,17 @@ hexclick.addEventListener("click", function() {
 
 
 
-
-    
-
-
-
     
  function hexIfText(sumifh, typeh, wordh) {const sum = sumifh;const stype = typeh;const stext = wordh;var element = document.querySelector(`[s-if="${sum}"]`);var ogtext = element.innerText;if(ogtext == stext){if(stype == "hide"){element.style.display='none';}if(stype == "show"){
      element.style.display='block';}}}
      
      
-     
-
-
-
-function show(elem) {
-let showele;
-var ele = elem;
-
-if (ele !== undefined) {
- showele = document.querySelector(ele);
-} else {
- showele = this;    
-}
-
-showele.style.display = 'block';
-
-}
-
+    
 HTMLElement.prototype.show = show;
 HTMLElement.prototype.hide = hide;
 HTMLElement.prototype.load = load;
 HTMLElement.prototype.toggle = toggle;
+HTMLElement.prototype.reload = reload;
 
 
 function toggle(elem) {
@@ -878,12 +835,7 @@ if (ele !== undefined) {
  togele = this;    
 }
 
-
-
-
 var stat = togele.getAttribute("toghex");
-
-
 if(stat !== null) {
 if(togele.style.display !== 'none') {
 togele.setAttribute("toghex", "show"); 
@@ -893,8 +845,6 @@ togele.setAttribute("toghex", "hide");
 
 }  
 }
-
-
 
 if(togele.style.display !== 'none') {
 if(stat !== null) {
@@ -921,8 +871,19 @@ togele.setAttribute("toghex", "show");
 
 
 
+function show(elem) {
+let showele;
+var ele = elem;
 
+if (ele !== undefined) {
+ showele = document.querySelector(ele);
+} else {
+ showele = this;    
+}
 
+showele.style.display = 'block';
+
+}
 
 
 function hide(elem) {
@@ -941,23 +902,70 @@ showele.style.display='none';
     
 }
 
-function load(elem) {
-        
-let loadele;
+
+function reload(elem) {
+let showele;
 var ele = elem;
-
 if (ele !== undefined) {
- loadele = document.querySelector(ele);
+showele = ele;
+} 
+else {
+if (this.id) {
+showele = "#" + this.id; 
 } else {
- loadele = this;    
+showele = "." + this.className; } 
+}
+var url = window.location.href;
+load(url, showele, showele);
 }
 
 
-loadele.innerHTML = loadval; 
-rootHex();
-loadele.style.display = 'block';
-    
+
+
+
+
+function load(linkh, innerh, placeh){
+var locateh = linkh;
+if(locateh.includes("?")) { 
+var locateh = locateh + "&v=" + makeid(7);
+} else {
+var locateh = locateh + "?v=" + makeid(7);
 }
+let pend;
+fetch(locateh).then(function(response) {
+response.text().then(function(text) {
+var data = text;
+if(placeh !== undefined){
+var parser = new DOMParser();
+var doc = parser.parseFromString(data, 'text/html');
+var findit = doc.querySelector(placeh);
+if(findit)  {
+var data = findit.innerHTML;   
+ } else {
+var data = data;
+ }  
+} 
+if(data == null) { 
+ } else {
+if(data == "") {
+  } else {
+if (innerh !== undefined) {
+if(locateh.includes("txt")) {
+document.querySelector(innerh).innerText = data;
+} else {    
+document.querySelector(innerh).innerHTML = data;
+}} 
+else {
+pend = this; 
+alert(pend);
+if(locateh.includes("txt")) {
+pend.innerText = data;
+ } else {
+pend.innerHTML = data;
+}}
+rootHex();      
+} } });});}
+
 
 
  
@@ -967,18 +975,6 @@ var elehtml = ele.innerHTML;
 return elehtml; 
 }
     
-const loadhex = document.getElementsByTagName('*');for(var i = 0; i < loadhex.length;i++) {const hexload = loadhex[i];
-const hasload = hasAttr(hexload, 'load');if(hasload == true){loadhexv = hexload.getAttribute("load");
-var loadele = document.querySelector(loadhexv); 
-
-hexload.addEventListener("click", function() {
-var loadval = getHTML(loadhexv);
-loadele.innerHTML = loadval; 
-rootHex();
-loadele.style.display = 'block';
-
- })}}
-
      
 
  
@@ -1066,23 +1062,4 @@ plusnav.innerText = '-';
 }
 }
 
-function hexGetLyrics(lyrich, innerh){
-const locateh = lyrich;
-const lelement = innerh;
-fetch(locateh)
-  .then(function(response) {
-    response.text().then(function(text) {
-      data = text;
- if(data == null) { 
- document.getElementById(innerh).innerText = "No Caption Available";
- } else {
-  if(data == "") {
-  document.getElementById(innerh).innerText = "No Caption Available";
-  
-  } else {
-document.getElementById(innerh).innerText = data; } } 
-});
-  });
-    
-}
 

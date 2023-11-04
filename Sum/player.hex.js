@@ -162,7 +162,7 @@ const innerlyric = document.createElement("div");
 innerlyric.classList.add("innerlyric");
 innerid = makeid(7);
 if(tracklyrics !== null) {
-const thelyric = hexGetLyrics(tracklyrics, innerid); } else {
+const thelyric = load(tracklyrics, '#'+innerid); } else {
 innerlyric.innerHTML = '<in style="opacity: 0.5">No caption available</in>';   
 }
 innerlyric.id = innerid;
