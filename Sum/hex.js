@@ -40,10 +40,10 @@ xui = "yes";
 
 }
 if(bundle == "events") {
-var startTime = performance.now();
+let startTime = performance.now();
 console.log('IMPORTING EVENTS')
 actTributes();
-var endTime = performance.now();
+let endTime = performance.now();
 const executionTime = endTime - startTime;
 const roundExTime = executionTime.toFixed(2);
 xlogs.push(`EVENTS LOADED: ${roundExTime} milliseconds`);
@@ -587,8 +587,153 @@ $reRoute(routeAll);
 
 
 HTMLElement.prototype.code = codeText;
+HTMLElement.prototype.coder = codeTexter;
 
 function codeText(ui) {
+const cfont = document.createElement("link");
+cfont.rel = "stylesheet";
+cfont.href = "https://fonts.googleapis.com/css?family=Source+Code+Pro"; 
+document.head.appendChild(cfont); 
+
+var wordsToColor = [];
+let text; 
+if(ui !== "snippet") {
+this.style.background = '#0a0a0a';
+this.style.color = 'rgba(255,255,255,0.8)'
+} 
+
+
+text = this.innerHTML; 
+
+
+var impPattern = /<imp[^>]*>[\s\S]*?<\/imp>/g;
+
+ // Replace "imp" tags with a unique marker to preserve their content
+var preservedContent = [];
+text = text.replace(impPattern, function (match) {
+preservedContent.push(match);
+
+return '##IMPTAG##';
+
+});
+
+
+
+    
+text = text.replace(/sscript/g, "script");
+text = text.replace(/sstyle/g, "style");
+
+text = text.replace(/(<script>)([\s\S]*?)(<\/script>)/g, (match, openTag, scriptContent, closeTag) => {
+    // Use a regex to change the color of words before a colon to blue
+scriptContent = scriptContent.replace(/(".*?")/g, '<imp color=#CE9178>$1</imp>');
+scriptContent = scriptContent.replace(/('.*?')/g, '<imp color=#CE9178>$1</imp>');
+scriptContent = scriptContent.replace(/\[([a-zA-Z0-9]+)\]/g, '\[<imp color=#CE9178>$1</imp>\]');
+  
+scriptContent = scriptContent.replace(/(\w+):/g, '<imp color=#81B4CF>$1</imp>:');
+scriptContent = scriptContent.replace(/([^\s\n\(\)\[\]]+)\(/g, '<imp color=#CD666A>$1</imp>\(');
+scriptContent = scriptContent.replace(/function\s*(\w+)/g, '<imp color=#cd666a>function</imp>&nbsp;<imp color=#70658d>$1</imp>');
+scriptContent = scriptContent.replace(/const\s*(\w+)/g, '<imp color=#cd666a>const</imp>&nbsp;<imp color=#70658d>$1</imp>');
+
+scriptContent = scriptContent.replace(/function/g, '<imp color=#cd666a>function</imp>');
+scriptContent = scriptContent.replace(/const/g, '<imp color=#cd666a>const</imp>');   
+
+    // Return the modified script content wrapped in script tags
+    return `${openTag}${scriptContent}${closeTag}`;
+});
+
+
+ // Replace "imp" tags with a unique marker to preserve their content
+var preservedContentSCR = [];
+text = text.replace(impPattern, function (match) {
+preservedContentSCR.push(match);
+
+return '##IMPSCR##';
+
+});
+
+
+
+
+text = text.replace(/\n/g, "b-r");
+text = text.replace(/</g, "&lt;");
+text = text.replace(/>/g, "&gt;");
+
+
+text = text.replace(/(\w+)=/g, '<imp colore-q-t#4D9699>$1</imp>=');
+
+
+text = text.replace(/e-q-t([^>]+)/g, '=$1');
+
+ text = text.replace(/(".*?")/g, '<imp style="color: #7f8fa1;">$1</imp>');
+text = text.replace(/('.*?')/g, '<imp style="color: #7f8fa1;">$1</imp>');
+text = text.replace(/&lt;([^\s]+)/g, '<imp style="color: #BAA669;">&lt;$1</imp>');
+text = text.replace(/&lt;\/(\w+)&gt;/g, '<imp style="color: #BAA669;">&lt;/$1&gt;</imp>');
+
+text = text.replace(/b-r/g, "<br>");
+text = text.replace(/h-r/g, "<hr>");
+ 
+if(ui !== undefined) {
+text = `<br>&#128308;&nbsp;&\#128993;&nbsp;&\#128994;<br><br>` + text + `<br><br>`;
+}
+
+text = text.replace(/\/\/\s*([a-zA-Z0-9\s\(\)\[\]]+)/g, '<imp style="opacity: 0.5">\/\/$1</imp>');
+
+
+text = text.replace(/##IMPSCR##/g, function () {
+
+ return preservedContentSCR.shift();
+
+});
+
+
+
+// Restore the preserved "imp" tags
+
+text = text.replace(/##IMPTAG##/g, function () {
+
+ return preservedContent.shift();
+
+});
+text = text.replace(/&lt;\/imp&gt;/g, '');
+
+ this.style.padding = '10px';
+const snip = document.createElement("button"); 
+snip.style.background = '#0a0a0a';
+snip.style.border = 'none';
+snip.style.textAlign = 'left';
+snip.style.color = 'rgba(255,255,255,0.8)';
+snip.style.width = 'auto';
+snip.style.fontFamily = 'Source Code Pro';
+snip.style.padding = '10px 15px'; 
+snip.style.borderRadius = '12px'; 
+     snip.innerHTML = text;
+
+
+
+
+if(ui !== "snippet") {
+this.innerHTML = "";
+ this.appendChild(snip);
+ } else {
+this.innerHTML = "";
+const back = document.createElement("button");
+back.id = "codesnap";
+back.style.textAlign = 'left';
+back.style.width = 'auto';
+back.style.border = 'none';
+back.style.borderRadius = '12px'; 
+back.style.background = 'linear-gradient(to bottom right, #0695E7, #1A9FE1, #49B6D5, #61C1CF, #6AC5CC)'; 
+back.style.padding = '25px 50px';
+     back.appendChild(snip); 
+     this.appendChild(back);
+ }
+
+}
+
+
+
+
+function codeTexter(ui) {
 const cfont = document.createElement("link");
 cfont.rel = "stylesheet";
 cfont.href = "https://fonts.googleapis.com/css?family=Source+Code+Pro"; 
@@ -654,9 +799,6 @@ text = text.replace(regex, '<imp style="color: #cd666a;">' + gword + '</imp>');
  text = text.replace(/h:r/g, "<hr>");
   text = text.replace(/sscript/g, "script");
 text = text.replace(/sstyle/g, "style");
-if(ui !== undefined) {
-text = `<imp style="user-select: none; pointer-events: none;" coder><div style="font-size: 16px; margin: 10px 0 15px 20px;">&#128308;&nbsp;&\#128993;&nbsp;&\#128994;<br></div></imp>` + text + `<br><br>`;
-}
 
 // Restore the preserved "imp" tags
 
@@ -671,20 +813,13 @@ text = text.replace(/&lt;\/imp&gt;/g, '');
 
 
  this.innerHTML = text;
- 
-
-
- 
- 
-
-
-
- 
- 
-
-
 
 }
+
+
+
+
+
 
 function colorCode() {
     let result = '';
@@ -1376,8 +1511,32 @@ sumhead.appendChild(sumcss);
 sumhead.appendChild(popcss);  
 sumhead.appendChild(urbcss);  
 sumhead.appendChild(rubcss);  
-sumhead.appendChild(chacss);   
-const hexnav = document.querySelectorAll('nav');
+sumhead.appendChild(chacss);  
+
+
+const mobX = hexxer.querySelectorAll('[mobile]'); 
+mobX.forEach(function(mobile) {
+const state = mobile.getAttribute("mobile");
+const mob = document.createElement("div");
+mob.setAttribute("state", "mobile-only");
+const desk = document.createElement("div");
+desk.setAttribute("state", "desktop-only");
+if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {
+if(state == "false") {
+mobile.parentNode.replaceChild(desk, mobile);  
+xlogs.push(`${mobile} removed from mobile view`);    
+}                      
+} else {
+if(state == "true") {
+mobile.parentNode.replaceChild(mob, mobile);  
+xlogs.push(`${mobile} removed from desktop view`);    
+}                       
+}});
+
+
+
+ 
+const hexnav = hexxer.querySelectorAll('nav');
 for(var i = 0; i < hexnav.length;i++) {
 var thenavv = hexnav[i];
 const navtype = thenavv.getAttribute("type");
