@@ -1497,7 +1497,6 @@ theuse.parentNode.replaceChild(newuse, theuse);
 }
 sendIt();
 rootHex();
-typeText('#'+newidd);
 }}}}; 
 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); xhr.send("sess=hex8080");}} 
     
