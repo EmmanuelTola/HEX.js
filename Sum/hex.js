@@ -1641,7 +1641,7 @@ const navicon = thenavv.getAttribute("logo");
 const navfont = thenavv.getAttribute("font");
 const navname = thenavv.getAttribute("name");
 let stat = "";
-if(thenavv.getAttribute("type") !== undefined) {
+if(thenavv.getAttribute("blink") !== undefined) {
 stat = "typetext"
 }
 
