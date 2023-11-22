@@ -2,6 +2,13 @@ const xlog = [];
 const xerror = [];
 let xui = "";
 let hru = "";
+const xrouter = []; 
+const xlogs = [];
+const allRoute = [];
+const pileRoute = [];
+const ruClass = [];
+let routeAll;
+let noRoute;
 // http get method 
 
 function $GET(urlh, linkh) {
@@ -27,8 +34,23 @@ hru = "yes";
 if(bundle == "logs")  {
 exeLogs();
 }
+if(bundle == "XQL") {
+    
+    INIXQL();
+}
 }
 
+
+function INIXQL() {
+let xparam = []
+const queryX = document.querySelectorAll('query');
+queryX.forEach(function(elem){ 
+elem.id = makeid(9); 
+elem.style.display = 'none';
+$XQL(elem.id)
+
+});
+}
 
 function $IMPORT(src) {
 if(src.includes("@")) {
@@ -58,17 +80,86 @@ xlogs.push(new Error().stack.split('\n')[2].trim() + ` Imported ${moduleName} fr
 } 
 }
 
+HTMLElement.prototype.Component = Component;
+
+function Depend(mod) {
+const name = mod.trim();
+const record = xrouter.find(record => record.name === name);
+if (record) {
+    return record.path;
+} else {
+xlogs.push(`Component ${mod} does not exist`)
+    return "none";
+}}
 
 
 
+function Component(mod) {
+if(mod !== undefined) {
+const path = Depend(mod);
+elem = this; 
+if(path == "none") {
+this.innerHTML = "";
+} else {
+fetch(path).then(function(response) { response.text().then(function(text) {
+let data = text;
+let regexx = /{ this\.route\.(\w+) }/;
 
-const xrouter = []; 
-const xlogs = [];
-const allRoute = [];
-const pileRoute = [];
-const ruClass = [];
-let routeAll;
-let noRoute;
+// Use replace with a callback function to replace the matched content
+
+data = data.replace(regexx, function (match, captureGroup) {
+ 
+ return getRouteInfo(allRoute, captureGroup);
+});
+
+
+var parser = new DOMParser();
+var doc = parser.parseFromString(data, 'text/html');
+var rMarkUp = doc.querySelector('hexxe');
+if(rMarkUp)  {
+data = rMarkUp.innerHTML;    
+ } else {
+data = "";
+ }
+elem.innerHTML = data;
+
+
+var rScript = doc.getElementsByTagName('script'); 
+for(var i = 0; i < rScript.length;i++) {
+const rScripter = rScript[i];
+const hasApp = hasAttr(rScripter, 'local');if(hasApp == true){
+
+const nScripter = document.getElementsByTagName("script");
+
+
+let parseScript = rScripter.textContent;
+eval(parseScript); 
+
+}}
+
+var rStyle = doc.getElementsByTagName('style'); 
+for(var i = 0; i < rStyle.length;i++) {
+const rStyler = rStyle[i];
+const hasSty = hasAttr(rStyler, 'local');if(hasSty == true){
+
+const nStyler = document.createElement("style");
+nStyler.textContent = rStyler.textContent;
+document.head.appendChild(nStyler);
+
+}
+}
+}); });
+}
+}
+
+return {
+inject: function(data) {
+$IMPORT(data)   
+}      
+}
+
+}
+
 
 
 
@@ -85,6 +176,9 @@ if (record) {
 } else {
     return "none";
 }}
+
+
+
 
 
 
@@ -126,7 +220,7 @@ if(nowRoute) {
 function $Router(routeData) {
 
 const currPathwin =  window.location.pathname;
-xlogs.push(new Error().stack.split('\n')[2].trim() + ' Current Pathname:', currPath);
+xlogs.push(new Error().stack.split('\n')[2].trim() + `Current Pathname: ${currPathwin}`);
 const rClass = routeData.class;
 ruClass.push(rClass); 
 var urlParams = new URLSearchParams(new URL(window.location).search);
@@ -137,7 +231,7 @@ var currPath = "@";
 
 const rError = routeData.error; 
 noRoute = rError; 
-xlogs.push(new Error().stack.split('\n')[2].trim() + ' ' + rClass); 
+xlogs.push(`Location Route Class: ${rClass}`);
 const routeObjects = routeData.routes || [];
   routeObjects.forEach(route => {
   
@@ -146,7 +240,7 @@ const routeObjects = routeData.routes || [];
     const rModule = route.module;
 const rPile = { path: rPath, name: rName, module: rModule}; 
 pileRoute.push(rPile);
-xlogs.push(new Error().stack.split('\n')[2].trim() + ` Class: ${rClass}, Path: ${rPath}, Name: ${rName}, Module: ${rModule}`);
+xlogs.push(`Route Path "${rPath}" Set! Name: ${rName}, Module: ${rModule}`);
   });
   allRoute.push(routeObjects); 
 const nowRoute = pileRoute.find(record => record.path === currPath);
@@ -1506,13 +1600,17 @@ const chacss = document.createElement('link');
 chacss.rel = 'stylesheet';
 chacss.type = 'text/css';
 chacss.href = 'https://fonts.googleapis.com/css?family=Charm';
+const outcss = document.createElement('link');
+outcss.rel = 'stylesheet';
+outcss.type = 'text/css';
+outcss.href = 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&display=swap';
 sumhead.appendChild(sumicon);
 sumhead.appendChild(sumcss);  
 sumhead.appendChild(popcss);  
 sumhead.appendChild(urbcss);  
 sumhead.appendChild(rubcss);  
 sumhead.appendChild(chacss);  
-
+sumhead.appendChild(outcss);
 
 const mobX = hexxer.querySelectorAll('[mobile]'); 
 mobX.forEach(function(mobile) {
@@ -1543,6 +1641,10 @@ const navtype = thenavv.getAttribute("type");
 const navicon = thenavv.getAttribute("logo");
 const navfont = thenavv.getAttribute("font");
 const navname = thenavv.getAttribute("name");
+let stat = "";
+if(thenavv.getAttribute("type") !== undefined) {
+stat = "typetext"
+}
 
 var thenav = document.createElement("div");
 document.body.appendChild(thenav); 
@@ -1565,7 +1667,7 @@ navhead.classList.add("navhead");
 thenav.appendChild(navhead);
 const navlogo = document.createElement("div");
 navlogo.classList.add("navlogo");
-navlogo.innerHTML = '<img id="logonav" src="'+navicon+'" width="40"><p typetext style="margin-left: 10px;">'+navname+'</p><i class="fa fa-list opennav" id="imgnav" onclick="togNav();"></i>';
+navlogo.innerHTML = '<img id="logonav" src="'+navicon+'" width="40"><p '+stat+' style="margin-left: 10px;">'+navname+'</p><i class="fa fa-list opennav" id="imgnav" onclick="togNav();"></i>';
 if(navfont !== null) {
 navlogo.style.setProperty('font-family', navfont);    
 } 
@@ -1582,7 +1684,7 @@ headernav.style.setProperty("user-select", "none");
 thenav.appendChild(headernav);
 const closenav = document.createElement("div");
 closenav.classList.add("navlogo");
-closenav.innerHTML = `<img id="logonav2" src="`+navicon+`" width="40"><p typetext style="margin-left: 10px; font-family: '`+navfont+`'">`+navname+`</p><p class="closenav" style="font-weight: 100;" style="margin-right: 20px;" onclick="togNav();">&times;</p>`;
+closenav.innerHTML = `<img id="logonav2" src="`+navicon+`" width="40"><p '+stat+' style="margin-left: 10px; font-family: '`+navfont+`'">`+navname+`</p><p class="closenav" style="font-weight: 100;" style="margin-right: 20px;" onclick="togNav();">&times;</p>`;
 headernav.appendChild(closenav);
 var logonav2 = document.getElementById('logonav2'); 
 if(logonav !== null) {
@@ -2496,4 +2598,83 @@ plusnav.innerText = '-';
 }
 
 console.log(xlog);
+
+
+function $XQL(data, el) {
+let startTime = performance.now();
+
+let query;
+if(data !== "inject") {
+query = document.getElementById(data);
+
+} else {
+query = document.querySelector('.'+el);
+}
+query.show(); 
+let qparam = query.getElementsByTagName('data')[0];
+let string = qparam.textContent;
+let outdata = query.getElementsByTagName('result')[0]; 
+let ogput = outdata.innerHTML;
+qparam.style.display = 'none';
+
+
+let checkterm = document.getElementById('xqlbt'+query.id);
+if(checkterm) {} else {
+const terminal = document.createElement("button");
+terminal.innerText = "what";
+terminal.style.display = 'none'; 
+terminal.id = "xqlbt"+query.id; 
+terminal.addEventListener('click', function() {
+swapQL(ogput);
+});
+document.body.appendChild(terminal); 
+}
+
+if(data !== "inject") {} else {   document.getElementById('xqlbt'+query.id).click();
+}
+
+const forPat = new RegExp(`{\\s*(\\w+)\\s*}`, 'g');
+const match = string.match(/SELECT (\w+) WHERE (\w+) = '([a-zA-Z0-9]+)'/);
+if (match) {
+  const dataSelector = match[1];
+  const conditionSelector = match[2];
+  const conditionValue = match[3];
+  const dataVal = eval(dataSelector); 
+ 
+const selectedData = dataVal.filter(item => item[conditionSelector] === conditionValue);
+let result;
+
+function swapQL(ogh) {
+let output;
+if(ogh !== undefined) {
+output = ogh;
+} else {
+output = outdata.innerHTML;
+}
+addVal = output.replace(forPat, function (match, captureKey) {
+if(selectedData[0].hasOwnProperty(captureKey)) {
+result = selectedData[0][captureKey];  
+} else { result = ""; }
+if(result == "null") {
+result = "";
+}
+return result;
+});
+
+
+outdata.innerHTML = addVal; 
+
+} 
+
+if(data !== "inject") { swapQL(); 
+
+let endTime = performance.now();
+const executionTime = endTime - startTime;
+const roundExTime = executionTime.toFixed(2);
+console.log(`XQL COMPILED: ${roundExTime} milliseconds`);
+}
+} else {
+  console.log("Invalid string format");
+}
+}
 
